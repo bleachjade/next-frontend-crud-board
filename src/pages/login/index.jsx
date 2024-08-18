@@ -1,28 +1,32 @@
-import { useState } from 'react';
-import { useRouter } from 'next/router';
+import { useState } from "react";
+import { useRouter } from "next/router";
+import parseJwt from "@/utils/parseJwt";
 
 const LogIn = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await fetch('http://localhost:3001/auth/login', {
-      method: 'POST',
+    const res = await fetch("/api/auth/login", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({ username, password }),
     });
 
     if (res.ok) {
       const data = await res.json();
-      console.log(data)
-      localStorage.setItem('token', data.access_token);
-      router.push('/');
+      const token = data.access_token;
+      const decodedToken = parseJwt(token);
+
+      localStorage.setItem("token", token);
+      localStorage.setItem("userId", decodedToken.sub);
+      router.push("/");
     } else {
-      alert('Login failed');
+      alert("Login failed");
     }
   };
 
@@ -47,12 +51,15 @@ const LogIn = () => {
             className="w-full px-4 py-2 mt-4 border rounded"
             required
           />
-          <button type="submit" className="px-4 py-2 mt-4 text-white bg-blue-500 rounded-lg">
+          <button
+            type="submit"
+            className="px-4 py-2 mt-4 text-white bg-blue-500 rounded-lg"
+          >
             Sign in
           </button>
         </form>
       </div>
     </div>
   );
-}
+};
 export default LogIn;

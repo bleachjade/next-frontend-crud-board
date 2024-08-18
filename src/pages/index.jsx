@@ -9,7 +9,7 @@ const Home = () => {
   useEffect(() => {
     // console.log(localStorage.getItem("token"))
     async function fetchPosts() {
-      const res = await fetch('http://localhost:3001/posts');
+      const res = await fetch('/api/posts');
       const data = await res.json();
       setPosts(data);
     }
@@ -19,6 +19,7 @@ const Home = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('userId');
     router.push('/login');
   };
 

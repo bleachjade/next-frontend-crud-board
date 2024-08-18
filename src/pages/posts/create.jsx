@@ -10,7 +10,7 @@ const CreatePost = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem('token');
-    const res = await fetch('http://localhost:3001/posts', {
+    const res = await fetch('/api/posts', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -18,7 +18,7 @@ const CreatePost = () => {
       },
       body: JSON.stringify({ title, content }),
     });
-
+    console.log(res)
     if (res.ok) {
       router.push('/');
     } else {
