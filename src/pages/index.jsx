@@ -1,15 +1,17 @@
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-import withAuth from '@/utils/withAuth';
+import { useEffect, useState } from "react";
+import withAuth from "@/utils/withAuth";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
+  const [userId, setUserId] = useState(null);
   const router = useRouter();
 
   useEffect(() => {
-    // console.log(localStorage.getItem("token"))
+    setUserId(localStorage.getItem("userId"));
     async function fetchPosts() {
-      const res = await fetch('/api/posts');
+      const res = await fetch("/api/posts");
       const data = await res.json();
       setPosts(data);
     }
@@ -17,32 +19,32 @@ const Home = () => {
     fetchPosts();
   }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('userId');
-    router.push('/login');
-  };
-
   return (
     <div className="container py-8 mx-auto">
-      <div className="flex items-center justify-between mb-4">
-        <h1 className="text-3xl font-bold">Posts</h1>
-        <button
-          onClick={handleLogout}
-          className="px-4 py-2 text-white bg-red-500 rounded"
-        >
-          Logout
+      <div className="flex items-center justify-center gap-4 mb-4">
+        <button className="p-2 text-white bg-green-500 rounded-lg" onClick={() => router.push(`/posts/create`)}>
+          Create new post
+        </button>
+        <button className="p-2 text-white bg-green-600 rounded-lg" onClick={() => router.push(`/profile/${userId}`)}>
+          Profile
         </button>
       </div>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 md:max-w-[50vw] mx-auto">
         {posts.map((post) => (
-          <div key={post.id} className="p-4 bg-white rounded-lg shadow-md">
+          <Link
+            key={post.id}
+            href={`/posts/${post.id}`}
+            className="p-4 bg-white rounded-lg shadow-md"
+          >
+            <div className="mb-2 text-gray-500">
+              username: {post.user.username}
+            </div>
             <h2 className="text-xl font-semibold">{post.title}</h2>
             <p className="text-gray-600">{post.content}</p>
-          </div>
+          </Link>
         ))}
       </div>
     </div>
   );
-}
+};
 export default withAuth(Home);

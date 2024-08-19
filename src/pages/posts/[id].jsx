@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 const PostDetail = () => {
   const [post, setPost] = useState(null);
@@ -25,11 +25,12 @@ const PostDetail = () => {
   return (
     <div className="container py-8 mx-auto">
       <div className="p-4 bg-white rounded-lg shadow-md">
+        <div className="mb-2 text-gray-500">username: {post.user.username}</div>
         <h2 className="text-xl font-semibold">{post.title}</h2>
         <p className="text-gray-600">{post.content}</p>
       </div>
       {/* Add comment section here */}
     </div>
   );
-}
+};
 export default PostDetail;

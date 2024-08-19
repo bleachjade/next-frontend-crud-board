@@ -31,33 +31,38 @@ const LogIn = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="p-6 bg-white rounded-lg shadow-md">
-        <h2 className="text-xl font-semibold">Sign In</h2>
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            placeholder="Username"
-            className="w-full px-4 py-2 mt-4 border rounded"
-            required
-          />
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password"
-            className="w-full px-4 py-2 mt-4 border rounded"
-            required
-          />
-          <button
-            type="submit"
-            className="px-4 py-2 mt-4 text-white bg-blue-500 rounded-lg"
-          >
-            Sign in
-          </button>
-        </form>
+    <div className="flex flex-col-reverse items-center justify-end min-h-screen md:justify-center md:flex-row bg-green-950">
+      <div className="flex items-center justify-center w-full md:w-3/4 p-6 min-h-[50svh] md:min-h-screen">
+        <div className="">
+          <h2 className="text-xl font-semibold text-white">Sign In</h2>
+          <form onSubmit={handleSubmit}>
+            <input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Username"
+              className="w-full px-4 py-2 mt-4 border rounded"
+              required
+            />
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Password"
+              className="w-full px-4 py-2 mt-4 border rounded"
+              required
+            />
+            <button
+              type="submit"
+              className="w-full px-4 py-2 mt-4 text-white bg-green-500 rounded-lg"
+            >
+              Sign in
+            </button>
+          </form>
+        </div>
+      </div>
+      <div className="flex items-center justify-center w-full md:w-1/4 min-h-[50svh] text-2xl font-bold text-white bg-green-800 rounded-lg md:min-h-screen">
+        a Board
       </div>
     </div>
   );

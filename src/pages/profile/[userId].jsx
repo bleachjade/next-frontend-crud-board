@@ -21,13 +21,14 @@ const UserPosts = () => {
 
   useEffect(() => {
     if (userId) {
-      const fetchPosts = async () => {
+      const fetchUserPosts = async () => {
         try {
-          const response = await fetch(`/api/posts/user/${userId}`);
+          const response = await fetch(`/api/users/${userId}`);
           if (!response.ok) {
             throw new Error("Failed to fetch posts");
           }
           const data = await response.json();
+          console.log(data);
           setPosts(data);
         } catch (err) {
           setError(err.message);
@@ -36,7 +37,7 @@ const UserPosts = () => {
         }
       };
 
-      fetchPosts();
+      fetchUserPosts();
     }
   }, [userId]);
 
@@ -44,16 +45,18 @@ const UserPosts = () => {
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <div>
-      <h1>Posts by User {userId}</h1>
-      <ul>
-        {posts.map((post) => (
+    <div className="container mx-auto">
+      <h1 className="my-4">Posts by username: {posts.username}</h1>
+      <div className="flex flex-col gap-4">
+        {posts.posts.map((post) => (
           <Link key={post.id} href={`/posts/${post.id}`}>
-            <h2>{post.title}</h2>
-            <p>{post.content}</p>
+            <div className="p-4 bg-white rounded-lg shadow-md">
+              <h2>{post.title}</h2>
+              <p>{post.content}</p>
+            </div>
           </Link>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };
